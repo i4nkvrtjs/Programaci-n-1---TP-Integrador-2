@@ -1,4 +1,5 @@
 import time
+import random
 
 # Base de datos de canciones
 canciones = [
@@ -79,12 +80,44 @@ def busqueda_binaria(lista, clave, valor):
             derecha = medio - 1
     return resultados
 
+#Generación automática de listas de distintos tamaños
+
+def generar_lista_canciones(n):
+    nombres = ["Song" + str(i) for i in range(n)]
+    artistas = ["Artista" + str(i % 10) for i in range(n)]
+    generos = ["Pop", "Rock", "Jazz", "Rap", "Clásica", "Indie"]
+    return [
+        {"nombre": random.choice(nombres), "artista": random.choice(artistas), "genero": random.choice(generos)}
+        for _ in range(n)
+    ]
+
+#Pruebas con distintos tamaños y comparación de tiempos
+
+def pruebas_por_tamano(tamanos, valor_busqueda="Song1"):
+    for tam in tamanos:
+        print(f"\n📏 Tamaño de lista: {tam}")
+        lista = generar_lista_canciones(tam)
+        ejecutar_busquedas(valor_busqueda, canciones)
+
+#Generador de canciones random
+
+def cancion_random():
+    nombres = ["Sol", "Lluvia", "Noche", "Luz", "Mar", "Fuego"]
+    artistas = ["Luna", "Río", "Montaña", "Viento", "Trueno"]
+    generos = ["Pop", "Rock", "Jazz", "Electrónica"]
+    return {
+        "nombre": random.choice(nombres) + str(random.randint(1, 100)),
+        "artista": random.choice(artistas),
+        "genero": random.choice(generos)
+    }
+
 #Ejecución
 
 def mostrar_resultados(titulo, resultados):
     print(f"\n{titulo} ({len(resultados)} resultados):")
     for c in resultados:
         print(f" - {c['nombre']} ({c['artista']}, {c['genero']})")
+
 
 def ejecutar_busquedas(valor_busqueda):
     campos = ["nombre", "artista", "genero"]
@@ -101,7 +134,7 @@ def ejecutar_busquedas(valor_busqueda):
         resultado = busqueda_lineal(canciones, campo, valor_busqueda)
         fin = time.perf_counter()
         mostrar_resultados(f"Lineal por {campo}", resultado)
-        print(f"⏱ Tiempo búsqueda lineal: {fin - inicio:.8f} segundos")
+        print(f"Tiempo búsqueda lineal: {fin - inicio:.8f} segundos")
 
     print("\n=== BÚSQUEDA BINARIA CON ORDENAMIENTO ===")
     for nombre_algoritmo, algoritmo in ordenamientos.items():
@@ -120,8 +153,8 @@ def ejecutar_busquedas(valor_busqueda):
             tiempo_busqueda = fin_busqueda - inicio_busqueda
 
             mostrar_resultados(f"Binaria por {campo}", resultado)
-            print(f"⏱ Tiempo ordenamiento ({campo}): {tiempo_ordenamiento:.8f} s")
-            print(f"⏱ Tiempo búsqueda binaria:     {tiempo_busqueda:.8f} s")
+            print(f"Tiempo ordenamiento ({campo}): {tiempo_ordenamiento:.8f} s")
+            print(f"Tiempo búsqueda binaria:     {tiempo_busqueda:.8f} s")
 
 
 #Menu
@@ -129,7 +162,7 @@ def ejecutar_busquedas(valor_busqueda):
 def menu():
     while True:
         print("\n=== BUSCADOR DE CANCIONES ===")
-        valor = input("🔍 Ingresá nombre, artista o género (o 'salir'): ").strip()
+        valor = input("Ingresá nombre, artista o género (o 'salir'): ").strip()
         if valor.lower() == "salir":
             break
         ejecutar_busquedas(valor)
@@ -138,33 +171,3 @@ def menu():
 
 if __name__ == "__main__":
     menu()
-
-#Generación automática de listas de distintos tamaños
-import random
-
-def generar_lista_canciones(n):
-    nombres = ["Song" + str(i) for i in range(n)]
-    artistas = ["Artista" + str(i % 10) for i in range(n)]
-    generos = ["Pop", "Rock", "Jazz", "Rap", "Clásica", "Indie"]
-    return [
-        {"nombre": random.choice(nombres), "artista": random.choice(artistas), "genero": random.choice(generos)}
-        for _ in range(n)
-    ]
-
-#Pruebas con distintos tamaños y comparación de tiempos
-def pruebas_por_tamano(tamanos, valor_busqueda="Song1"):
-    for tam in tamanos:
-        print(f"\n📏 Tamaño de lista: {tam}")
-        lista = generar_lista_canciones(tam)
-        ejecutar_busquedas(valor_busqueda, canciones)
-
-#Generador de canciones random
-def cancion_random():
-    nombres = ["Sol", "Lluvia", "Noche", "Luz", "Mar", "Fuego"]
-    artistas = ["Luna", "Río", "Montaña", "Viento", "Trueno"]
-    generos = ["Pop", "Rock", "Jazz", "Electrónica"]
-    return {
-        "nombre": random.choice(nombres) + str(random.randint(1, 100)),
-        "artista": random.choice(artistas),
-        "genero": random.choice(generos)
-    }
