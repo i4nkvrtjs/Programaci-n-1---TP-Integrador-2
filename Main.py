@@ -1,16 +1,10 @@
 import time
 import random
+import sys
 
-# Base de datos de canciones
-canciones = [
-    {"nombre": "Imagine", "artista": "John Lennon", "genero": "Rock"},
-    {"nombre": "Billie Jean", "artista": "Michael Jackson", "genero": "Pop"},
-    {"nombre": "Smells Like Teen Spirit", "artista": "Nirvana", "genero": "Grunge"},
-    {"nombre": "Bohemian Rhapsody", "artista": "Queen", "genero": "Rock"},
-    {"nombre": "Hey Jude", "artista": "The Beatles", "genero": "Rock"},
-    {"nombre": "Bad Guy", "artista": "Billie Eilish", "genero": "Pop"},
-    {"nombre": "Thriller", "artista": "Michael Jackson", "genero": "Pop"},
-]
+#Aumento de límite de recursión
+
+sys.setrecursionlimit(5000)
 
 #Ordenamiento
 
@@ -83,7 +77,7 @@ def busqueda_binaria(lista, clave, valor):
 #Generación automática de listas de distintos tamaños
 
 def generar_lista_canciones(n):
-    nombres = ["Song" + str(i) for i in range(n)]
+    nombres = ["Canción" + str(i) for i in range(n)]
     artistas = ["Artista" + str(i % 10) for i in range(n)]
     generos = ["Pop", "Rock", "Jazz", "Rap", "Clásica", "Indie"]
     return [
@@ -91,11 +85,13 @@ def generar_lista_canciones(n):
         for _ in range(n)
     ]
 
+#Ejecución
+
 def mostrar_resultados(titulo, resultados):
     print(f"\n{titulo} ({len(resultados)} resultados):")
-    for c in resultados[:5]:
-        print(f" - {c['nombre']} ({c['artista']}, {c['genero']})")
-    if len(resultados) > 5:
+    for c in resultados[:10]:
+        print(f" - {c['nombre']}, {c['artista']}, {c['genero']}")
+    if len(resultados) > 10:
         print("...")
 
 def ejecutar_busquedas(valor_busqueda, lista):
@@ -115,7 +111,7 @@ def ejecutar_busquedas(valor_busqueda, lista):
         mostrar_resultados(f"Lineal por {campo}", resultado)
         print(f"Tiempo búsqueda lineal: {fin - inicio:.8f} segundos")
 
-    print("\n=== BÚSQUEDA BINARIA CON ORDENAMIENTO ===")
+    print("\n=== BÚSQUEDA BINARIA (CON ORDENAMIENTO) ===")
     for nombre_algoritmo, algoritmo in ordenamientos.items():
         print(f"\n--- {nombre_algoritmo.upper()} ---")
         for campo in campos:
@@ -131,38 +127,34 @@ def ejecutar_busquedas(valor_busqueda, lista):
             print(f"Ordenamiento: {fin_ordenamiento - inicio_ordenamiento:.8f} s")
             print(f"Búsqueda:     {fin_busqueda - inicio_busqueda:.8f} s")
 
-# MENÚ 
+#Menu 
 
 def menu():
     while True:
         print("\n=== MENÚ PRINCIPAL ===")
-        print("1. Usar base de canciones fija")
-        print("2. Generar lista aleatoria")
-        print("3. Salir")
-        opcion = input("Elegí una opción (1/2/3): ").strip()
+        print("1. Buscar")
+        print("2. Salir")
+        opcion = input("Elegí una opción (1 o 2): ").strip()
 
         if opcion == "1":
-            valor = input("Ingresá nombre, artista o género: ")
-            ejecutar_busquedas(valor, base_canciones)
-
-        elif opcion == "2":
             try:
-                tam = int(input("¿Cuántas canciones? (10, 100, 1000, 10000): "))
+                tam = int(input("¿Cuántas canciones incluimos en la lista? (10, 100, 1000, 10000): "))
                 if tam not in [10, 100, 1000, 10000]:
                     raise ValueError
                 lista = generar_lista_canciones(tam)
                 valor = input("Ingresá nombre, artista o género para buscar: ")
                 ejecutar_busquedas(valor, lista)
             except ValueError:
-                print("❌ Elegí un número válido.")
+                print("Elegí un número válido.")
 
-        elif opcion == "3":
-            print("¡Gracias por usar el buscador de canciones! 🎵")
+        elif opcion == "2":
+            print("¡Adiós!")
             break
-        else:
-            print("❌ Opción inválida.")
 
-# EJECUTAR 
+        else:
+            print("Opción inválida.")
+
+#Start 
 
 if __name__ == "__main__":
     menu()
