@@ -46,7 +46,7 @@ def quick_sort(lista, clave):
     mayores = [x for x in lista[1:] if x[clave] > pivote[clave]]
     return quick_sort(menores, clave) + [pivote] + quick_sort(mayores, clave)
 
-#Busquedas
+#Busqueda
 
 def busqueda_lineal(lista, clave, valor):
     return [x for x in lista if x[clave].lower() == valor.lower()]
@@ -55,23 +55,48 @@ def busqueda_binaria(lista, clave, valor):
     izquierda = 0
     derecha = len(lista) - 1
     resultados = []
+    valor = valor.lower()  # Normalizar el valor una sola vez
+
     while izquierda <= derecha:
         medio = (izquierda + derecha) // 2
-        actual = lista[medio][clave].lower()
-        if actual == valor.lower():
-            i = medio
-            while i >= 0 and lista[i][clave].lower() == valor.lower():
-                resultados.insert(0, lista[i])
-                i -= 1
-            i = medio + 1
-            while i < len(lista) and lista[i][clave].lower() == valor.lower():
-                resultados.append(lista[i])
-                i += 1
+        actual = lista[medio][clave].lower()  # Normalizar el campo a comparar
+
+        if actual == valor:
+            # Encontrar el primer y último índice con el mismo valor
+            inicio = medio
+            fin = medio
+
+            # Búsqueda binaria hacia la izquierda
+            low = izquierda
+            high = medio - 1
+            while low <= high:
+                mid = (low + high) // 2
+                if lista[mid][clave].lower() == valor:
+                    inicio = mid
+                    high = mid - 1
+                else:
+                    low = mid + 1
+
+            # Búsqueda binaria hacia la derecha
+            low = medio + 1
+            high = derecha
+            while low <= high:
+                mid = (low + high) // 2
+                if lista[mid][clave].lower() == valor:
+                    fin = mid
+                    low = mid + 1
+                else:
+                    high = mid - 1
+
+            # Agregar todos los resultados de una vez
+            resultados = lista[inicio : fin + 1]
             break
-        elif actual < valor.lower():
+
+        elif actual < valor:
             izquierda = medio + 1
         else:
             derecha = medio - 1
+
     return resultados
 
 #Generación automática de listas de distintos tamaños
