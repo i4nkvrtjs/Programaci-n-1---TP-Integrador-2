@@ -138,3 +138,33 @@ def menu():
 
 if __name__ == "__main__":
     menu()
+
+#Generación automática de listas de distintos tamaños
+import random
+
+def generar_lista_canciones(n):
+    nombres = ["Song" + str(i) for i in range(n)]
+    artistas = ["Artista" + str(i % 10) for i in range(n)]
+    generos = ["Pop", "Rock", "Jazz", "Rap", "Clásica", "Indie"]
+    return [
+        {"nombre": random.choice(nombres), "artista": random.choice(artistas), "genero": random.choice(generos)}
+        for _ in range(n)
+    ]
+
+#Pruebas con distintos tamaños y comparación de tiempos
+def pruebas_por_tamano(tamanos, valor_busqueda="Song1"):
+    for tam in tamanos:
+        print(f"\n📏 Tamaño de lista: {tam}")
+        lista = generar_lista_canciones(tam)
+        ejecutar_busquedas(valor_busqueda, canciones)
+
+#Generador de canciones random
+def cancion_random():
+    nombres = ["Sol", "Lluvia", "Noche", "Luz", "Mar", "Fuego"]
+    artistas = ["Luna", "Río", "Montaña", "Viento", "Trueno"]
+    generos = ["Pop", "Rock", "Jazz", "Electrónica"]
+    return {
+        "nombre": random.choice(nombres) + str(random.randint(1, 100)),
+        "artista": random.choice(artistas),
+        "genero": random.choice(generos)
+    }
