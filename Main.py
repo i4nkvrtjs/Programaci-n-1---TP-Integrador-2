@@ -91,35 +91,14 @@ def generar_lista_canciones(n):
         for _ in range(n)
     ]
 
-#Pruebas con distintos tamaños y comparación de tiempos
-
-def pruebas_por_tamano(tamanos, valor_busqueda="Song1"):
-    for tam in tamanos:
-        print(f"\n📏 Tamaño de lista: {tam}")
-        lista = generar_lista_canciones(tam)
-        ejecutar_busquedas(valor_busqueda, canciones)
-
-#Generador de canciones random
-
-def cancion_random():
-    nombres = ["Sol", "Lluvia", "Noche", "Luz", "Mar", "Fuego"]
-    artistas = ["Luna", "Río", "Montaña", "Viento", "Trueno"]
-    generos = ["Pop", "Rock", "Jazz", "Electrónica"]
-    return {
-        "nombre": random.choice(nombres) + str(random.randint(1, 100)),
-        "artista": random.choice(artistas),
-        "genero": random.choice(generos)
-    }
-
-#Ejecución
-
 def mostrar_resultados(titulo, resultados):
     print(f"\n{titulo} ({len(resultados)} resultados):")
-    for c in resultados:
+    for c in resultados[:5]:
         print(f" - {c['nombre']} ({c['artista']}, {c['genero']})")
+    if len(resultados) > 5:
+        print("...")
 
-
-def ejecutar_busquedas(valor_busqueda):
+def ejecutar_busquedas(valor_busqueda, lista):
     campos = ["nombre", "artista", "genero"]
     ordenamientos = {
         "Bubble Sort": bubble_sort,
@@ -131,43 +110,59 @@ def ejecutar_busquedas(valor_busqueda):
     print("\n=== BÚSQUEDA LINEAL ===")
     for campo in campos:
         inicio = time.perf_counter()
-        resultado = busqueda_lineal(canciones, campo, valor_busqueda)
+        resultado = busqueda_lineal(lista, campo, valor_busqueda)
         fin = time.perf_counter()
         mostrar_resultados(f"Lineal por {campo}", resultado)
         print(f"Tiempo búsqueda lineal: {fin - inicio:.8f} segundos")
 
     print("\n=== BÚSQUEDA BINARIA CON ORDENAMIENTO ===")
     for nombre_algoritmo, algoritmo in ordenamientos.items():
-        print(f"\n--- Algoritmo de ordenamiento: {nombre_algoritmo.upper()} ---")
+        print(f"\n--- {nombre_algoritmo.upper()} ---")
         for campo in campos:
-            #Ordena una vez por campo
             inicio_ordenamiento = time.perf_counter()
-            canciones_ordenadas = algoritmo(canciones, campo)
+            lista_ordenada = algoritmo(lista, campo)
             fin_ordenamiento = time.perf_counter()
-            tiempo_ordenamiento = fin_ordenamiento - inicio_ordenamiento
 
-            #Busqueda binaria en lista ordenada
             inicio_busqueda = time.perf_counter()
-            resultado = busqueda_binaria(canciones_ordenadas, campo, valor_busqueda)
+            resultado = busqueda_binaria(lista_ordenada, campo, valor_busqueda)
             fin_busqueda = time.perf_counter()
-            tiempo_busqueda = fin_busqueda - inicio_busqueda
 
             mostrar_resultados(f"Binaria por {campo}", resultado)
-            print(f"Tiempo ordenamiento ({campo}): {tiempo_ordenamiento:.8f} s")
-            print(f"Tiempo búsqueda binaria:     {tiempo_busqueda:.8f} s")
+            print(f"Ordenamiento: {fin_ordenamiento - inicio_ordenamiento:.8f} s")
+            print(f"Búsqueda:     {fin_busqueda - inicio_busqueda:.8f} s")
 
-
-#Menu
+# MENÚ 
 
 def menu():
     while True:
-        print("\n=== BUSCADOR DE CANCIONES ===")
-        valor = input("Ingresá nombre, artista o género (o 'salir'): ").strip()
-        if valor.lower() == "salir":
-            break
-        ejecutar_busquedas(valor)
+        print("\n=== MENÚ PRINCIPAL ===")
+        print("1. Usar base de canciones fija")
+        print("2. Generar lista aleatoria")
+        print("3. Salir")
+        opcion = input("Elegí una opción (1/2/3): ").strip()
 
-#Start
+        if opcion == "1":
+            valor = input("Ingresá nombre, artista o género: ")
+            ejecutar_busquedas(valor, base_canciones)
+
+        elif opcion == "2":
+            try:
+                tam = int(input("¿Cuántas canciones? (10, 100, 1000, 10000): "))
+                if tam not in [10, 100, 1000, 10000]:
+                    raise ValueError
+                lista = generar_lista_canciones(tam)
+                valor = input("Ingresá nombre, artista o género para buscar: ")
+                ejecutar_busquedas(valor, lista)
+            except ValueError:
+                print("❌ Elegí un número válido.")
+
+        elif opcion == "3":
+            print("¡Gracias por usar el buscador de canciones! 🎵")
+            break
+        else:
+            print("❌ Opción inválida.")
+
+# EJECUTAR 
 
 if __name__ == "__main__":
     menu()
