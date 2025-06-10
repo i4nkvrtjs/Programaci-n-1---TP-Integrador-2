@@ -8,3 +8,8 @@ El programa hecho en Python permite comparar el rendimiento de diferentes algori
 En el repositorio, tanto como en la carpeta digital, se puede encontrar la documentación completa del código, la cual explica detalladamente su funcionamiento.
 
 Como reflexiones, el trabajo nos aportó la capacidad de determinar con seguridad qué algoritmo funcionará mejor para distintos tipos de sistemas. Por ejemplo, si bien la búsqueda lineal es más lenta en todos los casos que la búsqueda binaria, a la segunda hay que sumarle el tiempo que toma el ordenamiento, con lo cuál, en bases de datos pequeñas, sería mejor utilizar la búsqueda lineal. Otra reflexión posible al respecto, es que si se piensan hacer varias búsquedas consecutivas, con ordenar la lista una sola vez la búsqueda binaria funcionaría, sin duda, con mayor velocidad.Por ende, el tiempo de ordenamiento sería rápidamente compensado, ya que al ejecutar varias búsquedas lineales seguidas, el tiempo que tarda se acumularía demasiado.
+
+En el repositorio encontrarán:
+TP Integrador 2 - Programación 1 Peirano-Piñeyro.pdf -> Trabajo a presentar
+Documentación del Programa de Comparación y Análisis de Algoritmos de Búsqueda y Ordenamiento.pdf -> Documentación en detalle del código
+Link al video -> https://www.youtube.com/watch?v=3TJ-BMVxv3U

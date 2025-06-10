@@ -137,7 +137,7 @@ def ejecutar_busquedas(valor_busqueda, lista):
         print(f"Tiempo búsqueda lineal: {fin - inicio:.8f} segundos")
 
     print("\n=== BÚSQUEDA BINARIA (CON ORDENAMIENTO) ===")
-    for nombre_algoritmo, algoritmo in ordenamientos.items():
+    for nombre_algoritmo,algoritmo in ordenamientos.items():
         print(f"\n--- {nombre_algoritmo.upper()} ---")
         for campo in campos:
             inicio_ordenamiento = time.perf_counter()
