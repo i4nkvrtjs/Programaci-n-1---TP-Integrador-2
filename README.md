@@ -11,5 +11,9 @@ Como reflexiones, el trabajo nos aportó la capacidad de determinar con segurida
 
 En el repositorio encontrarán:
 TP Integrador 2 - Programación 1 Peirano-Piñeyro.pdf -> Trabajo a presentar
+
+
 Documentación del Programa de Comparación y Análisis de Algoritmos de Búsqueda y Ordenamiento.pdf -> Documentación en detalle del código
+
+
 Link al video -> https://www.youtube.com/watch?v=3TJ-BMVxv3U
